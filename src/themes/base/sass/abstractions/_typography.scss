@@ -18,3 +18,19 @@
   opacity: 0.4;
   font-size: 0.85em;
 }
+
+%set-header {
+  background: $color-white;
+  padding: $spacing-base-unit $spacing-base-unit;
+  margin: 0;
+  font-size: $font-size-heading;
+  @extend .shadow-z-1;
+  position: relative;
+}
+
+%no-reults {
+  text-align: center;
+  margin-top: 10%;
+  font-size: 1.8em;
+  color: $color-greyscale-cloudy;
+}

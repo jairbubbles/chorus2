@@ -45,6 +45,16 @@ body.model-open {
   }
 }
 
+#page-title {
+  .title {
+    @include set-layout('height-header', 'padding-left');
+    display: none;
+    @include at-bp(large) {
+      display: inline-block;
+    }
+  }
+}
+
 // Fanart and its overlay.
 #fanart,
 #fanart-overlay {
@@ -154,6 +164,10 @@ body.model-open {
   }
 }
 
+#offscreen {
+  display: none;
+}
+
 #modal-window {
   .close, .close:hover, .close:focus {
     color: $color-white;
@@ -197,6 +211,7 @@ body.model-open {
       display: none;
     }
   }
+  &.style-edit-form,
   &.style-form {
     .modal-footer {
       display: none;

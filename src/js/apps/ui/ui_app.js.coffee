@@ -83,9 +83,13 @@
         $wrap.append($newOption)
       $wrap
 
-  ## Open a text input modal window, callback recieves the entered text.
-  App.commands.setHandler "ui:textinput:show", (title, msg = '', callback, open = true) ->
-    $input = $('<input>', {id: 'text-input', class: 'form-control', type: 'text'}).on('keyup', (e) ->
+  ## Open a text input modal window, callback receives the entered text.
+  ## Options properties: {msg: 'string', open: 'bool', defaultVal: 'string'}
+  App.commands.setHandler "ui:textinput:show", (title, options = {}, callback) ->
+    msg = if options.msg then options.msg else ''
+    open = if options.open then true else false
+    val = if options.defaultVal then options.defaultVal else ''
+    $input = $('<input>', {id: 'text-input', class: 'form-control', type: 'text', value: val}).on('keyup', (e) ->
       if e.keyCode is 13 and callback
         callback( $('#text-input').val() )
         API.closeModal()
@@ -113,8 +117,8 @@
     API.openModal(title, msg, open)
 
   ## Open a form modal window
-  App.commands.setHandler "ui:modal:form:show", (title, msg = '') ->
-    API.openModal(title, msg, true, 'form')
+  App.commands.setHandler "ui:modal:form:show", (title, msg = '', style = 'form') ->
+    API.openModal(title, msg, true, style)
 
   ## Close a modal window
   App.commands.setHandler "ui:modal:close", ->
@@ -134,6 +138,11 @@
   ## Toggle player menu
   App.commands.setHandler "ui:playermenu", (op) ->
     API.playerMenu op
+
+  ## Bind closing the f#@kn dropdown on item click
+  App.commands.setHandler "ui:dropdown:bind:close", ($el) ->
+    $el.on "click", '.dropdown-menu li, .dropdown-menu a', (e) ->
+      $(e.target).closest('.dropdown-menu').parent().removeClass('open').trigger('hide.bs.dropdown')
 
   ## When shell ready.
   App.vent.on "shell:ready", (options) =>
